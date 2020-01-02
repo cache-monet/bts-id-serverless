@@ -15,7 +15,7 @@ provider:
 
 functions:
   process:
-    handler: handler.process
+    handler: functions/identify/handler.process
     environment:
       SOURCE: ${self:custom.source}
       TARGET: ${self:custom.target}
