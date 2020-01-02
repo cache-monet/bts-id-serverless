@@ -7,9 +7,9 @@ verify_ssl = true
 
 [packages]
 boto3 = "*"
+dlib = "*"
 face-recognition = "*"
 opencv-python = "*"
-dlib = "*"
 
 [requires]
 python_version = "3.6"

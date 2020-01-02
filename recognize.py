@@ -1,6 +1,7 @@
 import face_recognition
 import pickle
 import cv2
+import logging
 
 def process(raw_image, encodings):
   encodings = pickle.loads(open(encodings, 'rb').read())
@@ -9,7 +10,7 @@ def process(raw_image, encodings):
 
 def recognize(image, names, data, detection_method, tolerance):
   rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-  print('[INFO] recognizing faces...')
+  logging.info('recognizing faces...')
   boxes = face_recognition.face_locations(rgb, model=detection_method)
   detected = face_recognition.face_encodings(image, boxes)
   for face in detected:
@@ -33,7 +34,7 @@ def draw(image, boxes, names):
     y = top - 15 if top - 15 > 15 else top + 15
     cv2.putText(image, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
       0.75, (0, 255, 0), 2)
-  print('[INFO] DONE')
+  logging.info('DONE')
 
 def show(image):
   cv2.imshow('Image', image)
