@@ -4,9 +4,12 @@ import os
 import sys
 # Set logging level and env vars
 logging.basicConfig(level=logging.INFO)
+# SOURCE = 'bts-identifier-source'
+# TARGET = 'bts-identifier-target'
 SOURCE = os.environ['SOURCE']
 TARGET = os.environ['TARGET']
-# Unzip packaged dependencies
+
+# Unzip packaged dependencies 
 try: 
   import unzip_requirements
 except ImportError:
@@ -24,7 +27,7 @@ def process(event, context):
   processed_key = '{}_identified.{}'.format(filename, extension)
   s3.download_file(Bucket=SOURCE, Key=key, Filename=key)
   logging.info('{} downloaded'.format(key))
-  identified = identify(key, processed_key, 'encodings.pickle')
+  identified = identify(key, processed_key, os.path.dirname(__file__)+'/encodings.pickle')
   s3.upload_file(Bucket=TARGET, Key=processed_key, Filename=processed_key)
   logging.info('{} uploaded'.format(processed_key))
   os.remove(key)

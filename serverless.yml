@@ -6,6 +6,8 @@ provider:
   runtime: python3.6
   stage: dev
   region: us-west-2
+  timeout: 60
+  memory: 3000
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -15,7 +17,7 @@ provider:
 
 functions:
   process:
-    handler: functions/identify/handler.process
+    handler: handler.process
     environment:
       SOURCE: ${self:custom.source}
       TARGET: ${self:custom.target}
@@ -32,7 +34,7 @@ custom:
   pythonRequirements:
     dockerizePip: non-linux
     zip: true
-    slim: true
+    slim: false
     strip: false
   source:
     bts-identifier-source
